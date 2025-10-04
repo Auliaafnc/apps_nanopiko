@@ -263,36 +263,36 @@ class CustomerResource extends Resource
                     ->sortable()->alignCenter(),
 
                 ImageColumn::make('image')
-    ->label('Gambar')
-    ->getStateUsing(function ($record) {
-        $val = $record->image;
+                    ->label('Gambar')
+                    ->getStateUsing(function ($record) {
+                        $val = $record->image;
 
-        // Kalau datanya berupa JSON string → ambil index pertama
-        if (is_string($val) && str_starts_with($val, '[')) {
-            $decoded = json_decode($val, true);
-            $val = is_array($decoded) ? ($decoded[0] ?? null) : $val;
-        }
-        // Kalau array → ambil index pertama
-        if (is_array($val)) {
-            $val = $val[0] ?? null;
-        }
-        if (blank($val)) {
-            return null;
-        }
+                        // Kalau datanya berupa JSON string → ambil index pertama
+                        if (is_string($val) && str_starts_with($val, '[')) {
+                            $decoded = json_decode($val, true);
+                            $val = is_array($decoded) ? ($decoded[0] ?? null) : $val;
+                        }
+                        // Kalau array → ambil index pertama
+                        if (is_array($val)) {
+                            $val = $val[0] ?? null;
+                        }
+                        if (blank($val)) {
+                            return null;
+                        }
 
-        // Hilangkan prefix storage/ biar konsisten
-        $val = preg_replace('#^/?storage/#', '', $val);
+                        // Hilangkan prefix storage/ biar konsisten
+                        $val = preg_replace('#^/?storage/#', '', $val);
 
-        // Kalau sudah URL langsung, pakai saja
-        if (preg_match('#^https?://#', $val)) {
-            return $val;
-        }
+                        // Kalau sudah URL langsung, pakai saja
+                        if (preg_match('#^https?://#', $val)) {
+                            return $val;
+                        }
 
-        // Default → ambil dari storage public
-        return asset('storage/' . ltrim($val, '/'));
-    })
-    ->disk('public')
-    ->circular(), // ✅ tampil bulat
+                        // Default → ambil dari storage public
+                        return asset('storage/' . ltrim($val, '/'));
+                    })
+                    ->disk('public')
+                    ->circular(), 
 
 
                 BadgeColumn::make('status_pengajuan')

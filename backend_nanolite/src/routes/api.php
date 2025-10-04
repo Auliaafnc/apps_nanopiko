@@ -96,6 +96,12 @@ use App\Filament\Admin\Resources\CustomerProgramResource\Api\Handlers\DetailHand
 use App\Filament\Admin\Resources\CustomerProgramResource\Api\Handlers\UpdateHandler     as CustomerProgramUpdateHandler;
 use App\Filament\Admin\Resources\CustomerProgramResource\Api\Handlers\DeleteHandler     as CustomerProgramDeleteHandler;
 
+// Handlers Perbaikandata
+use App\Filament\Admin\Resources\PerbaikandataResource\Api\Handlers\CreateHandler      as PerbaikandataCreateHandler;
+use App\Filament\Admin\Resources\PerbaikandataResource\Api\Handlers\PaginationHandler as PerbaikandataPaginationHandler;
+use App\Filament\Admin\Resources\PerbaikandataResource\Api\Handlers\DetailHandler     as PerbaikandataDetailHandler;
+use App\Filament\Admin\Resources\PerbaikandataResource\Api\Handlers\UpdateHandler     as PerbaikandataUpdateHandler;
+use App\Filament\Admin\Resources\PerbaikandataResource\Api\Handlers\DeleteHandler     as PerbaikandataDeleteHandler;
 
 Route::post('/auth/login', [AuthController::class, 'login'])->name('api.login');
 
@@ -202,6 +208,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{id}',    [CustomerProgramDetailHandler::class,     'handler'])->name('api.customer_programs.detail');
         Route::put('/{id}',    [CustomerProgramUpdateHandler::class,     'handler'])->name('api.customer_programs.update');
         Route::delete('/{id}', [CustomerProgramDeleteHandler::class,     'handler'])->name('api.customer_categories.delete');
+    });
+
+    Route::prefix('perbaikandatas')->group(function () {
+        Route::post('/',       [PerbaikandataCreateHandler::class,      'handler'])->name('api.perbaikandatas.create');
+        Route::get('/',        [PerbaikandataPaginationHandler::class, 'handler'])->name('api.perbaikandatas.pagination');
+        Route::get('/{id}',    [PerbaikandataDetailHandler::class,     'handler'])->name('api.perbaikandatas.detail');
+        Route::put('/{id}',    [PerbaikandataUpdateHandler::class,     'handler'])->name('api.perbaikandatas.update');
+        Route::delete('/{id}', [PerbaikandataDeleteHandler::class,     'handler'])->name('api.perbaikandatas.delete');
     });
 
     
